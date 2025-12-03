@@ -1,0 +1,66 @@
+version: "3.9"
+
+services:
+  app:
+    image: iqbaalz28/app-learnify:latest
+    ports:
+      - "8080:80"
+    networks:
+      - bale
+    deploy:
+      replicas: 4
+      placement:
+        constraints: [node.role == worker]
+      update_config:
+        delay: 5s
+      restart_policy:
+        condition: on-failure
+
+  db:
+    image: iqbaalz28/mariadb:10.7.8
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
+      MYSQL_DATABASE: "learnify"
+    secrets:
+      - mysql_root_password
+    networks:
+      - bale
+    deploy:
+      replicas: 2
+      placement:
+        constraints: [node.role == worker]
+      update_config:
+        delay: 5s
+      restart_policy:
+        condition: on-failure
+
+  lb:
+    image: iqbaalz28/haproxy:latest
+    ports:
+      - "80:80"
+      - "8404:8404"
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    dns: 127.0.0.11
+    networks:
+      - bale
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+
+secrets:
+  mysql_root_password:
+    external: true
+
+networks:
+  bale:
+    driver: overlay
+
+volumes:
+  db_data:
