@@ -9,11 +9,34 @@ Sistem ini menggunakan topologi cluster yang terdiri dari 3 node server:
 2. Worker Node 1 (192.168.28.11): Menjalankan replika aplikasi web dan database.
 3. Worker Node 2 (192.168.28.12): Menjalankan replika aplikasi web dan database.
 
-Komponen Teknologi:
-- Web Server: Apache dengan PHP 7.1 (Image Custom).
-- Database: MariaDB 10.7.8.
-- Load Balancer: HAProxy (Image Custom dengan statistik enabled).
-- Orchestration: Docker Swarm.
+## 🛠️ Komponen Teknologi & Tech Stack
+
+Proyek ini dibangun menggunakan arsitektur multi-layer, memadukan infrastruktur server HA dengan aplikasi web e-learning yang interaktif:
+
+### 1. Infrastruktur & Orkestrasi
+- **Sistem Operasi**: Ubuntu Server 22.04 LTS
+- **Orkestrasi Kontainer**: Docker Swarm (Clustering & High Availability)
+- **Load Balancer**: HAProxy (Image Custom dengan konfigurasi statistik *enabled*)
+
+### 2. Backend & Web Server
+- **Web Server**: Apache
+- **Bahasa Pemrograman**: PHP 7.1
+- **Framework Aplikasi**: CodeIgniter 3 (Arsitektur MVC - Model View Controller)
+- **Database**: MariaDB 10.7.8
+
+### 3. Frontend & UI/UX (Aplikasi Web)
+- **Markup & Styling**: HTML5, CSS3, JavaScript
+- **CSS Framework**: Bootstrap 4
+- **Libraries & Plugins**:
+  - jQuery 3.3.1 (Manipulasi DOM)
+  - SweetAlert2 (Interaksi *alert* dan notifikasi yang responsif)
+  - AOS (*Animate On Scroll*) untuk animasi elemen antarmuka
+  - Owl Carousel, Isotope, Magnific Popup, SimpleLightbox
+- **Tipografi & Ikon**: Google Fonts (Roboto, Poppins), FontAwesome, Linearicons
+
+### 4. Komponen Tambahan
+- **Integrasi Pihak Ketiga**: Disqus (Untuk fitur diskusi dan reaksi secara real-time)
+- **Keamanan**: Docker Secrets (Untuk manajemen password root database secara aman)
 
 ## 📂 Struktur Direktori
 ```
